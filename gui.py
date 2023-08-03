@@ -5,7 +5,8 @@ from dataclasses import dataclass
 @dataclass
 class MenuScreen:
     def __init__(self):
-        print("Welcome to Stackem Checkers. Enter 'Y' to proceed.")
+        print("Welcome to Stackem Checkers")
+        print("Enter 'Y' to proceed.")
         self._user_response = str(input())
 
         if self._user_response.upper() == "Y":
