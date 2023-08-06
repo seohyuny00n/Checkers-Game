@@ -97,7 +97,7 @@ QWidget {
 
     # name confirmation (also pulled from model)
     def name_confirmation(self):
-        """Users will be asked to confirm their inputted(?) names."""
+        """Users will be asked to confirm their inputted names."""
         print("Is this information correct? (Y/N)")
         print("Player 1: " + self.player_one_name)
         print("Player 2: " + self.player_two_name)
@@ -130,20 +130,19 @@ QWidget {
             # if the user responds with a character that is out of boundaries (/not y nor n).
             print("Error. Must enter 'Y' or 'N'. Please re-enter response.")
 
-    def p1_name_entered(self):
-        """When the user inputs characters (hopefully) within QLineEdit."""
-        pass
-        # if the user entered a valid response, ask player 2
-
-    def p2_name_entered(self):
-        """When the user inputs characters (hopefully) for QLineEdit."""
-        pass
-
-    def next_button_clicked(self):
-        """WIP, shows the next screen, which is either the rules or the main checker board screen."""
-        pass
+# def p1_name_entered(self):
+# """When the user inputs characters (hopefully) within QLineEdit."""
+# pass
+# if the user entered a valid response, ask player 2
 
 
+# def p2_name_entered(self):
+# """When the user inputs characters (hopefully) for QLineEdit."""
+# pass
+
+# def next_button_clicked(self):
+# """WIP, shows the next screen, which is either the rules or the main checker board screen."""
+# pass
 
 
 model = MenuScreen()
