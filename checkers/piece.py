@@ -1,5 +1,5 @@
-from .constants import BLACK, WHITE, SQUARE_SIZE, GREY, CROWN
 import pygame
+from .constants import BLACK, WHITE, SQUARE_SIZE, GREY, CROWN
 
 class Piece:
     

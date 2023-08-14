@@ -112,7 +112,7 @@ class Board:
     
     # traverse left and right account for the multiple jumps
     # step will be dependent on direction of movement (up or down if king)
-    # skipped contains jumped pieces; "we can only move to squares when we skip another piece"
+    # skipped is a move when we have jumped and is stored; we can only move to squares when we skip another piece
     def _traverse_left(self, start, stop, step, color, left, skipped = []):
         moves = {}
         last = []
@@ -129,6 +129,8 @@ class Board:
             # breaks out of for loop if a piece has been skipped
             # if == 0, piece has found empty square
             if current_position == 0:
+                # adds this skipped to moves in moves.update
+                # if a piece can only skip once, add to moves
                 if skipped and not last:
                     break
                 elif skipped:
@@ -153,7 +155,7 @@ class Board:
                 break
 
             # if current position does not equal and the piece occupying it is the same color
-            # this will not be part of moves dict/break out of for loop
+            # this will not be part of moves dict and will break out of for loop
             elif current_position.color == color:
                 break
             # if not player's color, it is opponent's color
@@ -187,12 +189,10 @@ class Board:
                     moves[(r, right)] = last + skipped 
                 else:
                     # if above is not true
-                    # when there is no piece to skip over, this position in variable moves[(r, left)]
+                    # when there is no piece to skip over, this position in variable moves[(r, right)]
                     # will be stored as the last possible move a piece can make and be added to moves list
                     moves[(r, right)] = last
                 
-                # checks to see if we can double jump or not
-                # if not, last row is the last possible move
                 if last:
                     if step == -1:
                         row = max(r - 3, 0)
@@ -203,8 +203,6 @@ class Board:
                     moves.update(self._traverse_right(r + step, row, step, color, right + 1, skipped = last))
                 break
 
-            # if current position does not equal and the piece occupying it is the same color
-            # this will not be part of moves dict/break out of for loop
             elif current_position.color == color:
                 break
             # if not player's color, it is opponent's color
