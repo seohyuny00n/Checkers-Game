@@ -13,18 +13,19 @@ class Player:
 
 
 # board object - what can act on it?
-class Board:
+# class Board:
 
-    def __init__(self) -> None:
+#     def __init__(self) -> None:
             
     
-    def move_piece(self) -> None:
+    # def move_piece(self) -> None:
+    #     pass
 
     # this would totally return coordinates
     # that means I'd have to load in the board coord.json in this class
     # how to tell comp which coord???
-    def get_piece(self):
-        return 
+    # def get_piece(self):
+    #     return 
 
 # checker object - what describes it?
 class Checkers:
@@ -35,9 +36,17 @@ class Checkers:
         self.col = col
         self.king = False
 
+    # source: https://www.youtube.com/watch?v=LSYj8GZMjWY 
+    ROW = 8
+    COL = 8
+
     # makes checkerpiece a king
     def make_king(self) -> bool:
          self.king = True
+
+    
+    def move_piece(piece):
+        piece[row][col] = 
 
 
 
@@ -48,6 +57,7 @@ P1_name = input("Please input your name, P1: ")
 P2_name = input("Please input your name, P2: ")
 
 print(f"Okay, {P1_name} and {P2_name}. Let's start.")
+
 
 
 white_checker_pieces: dict[str, bool] = {}
@@ -67,4 +77,15 @@ with open("checkers_black_pieces.json") as contents_2:
 
 # for x in black_checker_pieces:
 #     print(x)
+
+checkerboard_coordinates: dict[str, bool] = {}
+with open("checkerboard_coordinates.json") as checkerboard:
+    checkerboard_coordinates = json.load(checkerboard)
+
+
+def get_piece:
+
+
+for x in checkerboard_coordinates:
+    print(x)
 
