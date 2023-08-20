@@ -1,28 +1,34 @@
 import pygame
 from .constants import BLACK, WHITE, BLUE, SQUARE_SIZE
-from checkers.board import Board
+from .board import Board
 
 # responsible for everything: board, pieces etc
 # allows user to interact with game
 class Game:
+    """Control and update game interface."""
 
     def __init__(self, window) -> None:
+        """initialize init and the game window."""
         self._init()
         self.window = window
 
     def update_game_display(self, window) -> None:
+        """update the game display, including piece and valid move positions."""
         self.board.draw_board_and_pieces(window)
         self.draw_valid_moves(self.valid_moves)
         pygame.display.update()
 
     def winner(self):
+        """return winner."""
         # borrows winner method from board
         return self.board.winner()
 
     # cannot and should not be accessed from outside the class
     # rather than storing these properties twice, they're safely put in init and accessed
     # by the constructor method (class structure allows for class methods to be read all at once by computer)
+    # tidies things up by storing these attributes in one place
     def _init(self):
+        """initialize board, selected piece, turn and valid moves."""
         # selected by user
         self.selected = None
         # game controls the board. the board in main
@@ -33,12 +39,14 @@ class Game:
         self.valid_moves = {}
 
     # calls _init method
-    # reset method is the same as _init method (initialized) but resets to the intialized state
+    # reset method is the same as _init method but resets to the intialized state
     def reset(self):
+        """reset the game."""
         self._init()
     
     # select determines if a player will move a piece
     def select(self, row, col):
+        """select piece and move it to new position."""
         # this will loop through until result is valid
         if self.selected:
             # trying to move result to whatever row, col is passed in
@@ -62,6 +70,7 @@ class Game:
     
     # private as players don't really move pieces, they *select* it
     def _move(self, row, col):
+        """move piece to valid square including if piece skips over opponent's piece."""
         piece = self.board.get_piece(row, col)
         # a piece can only move into a space that has no piece. this is represented by 0
         # selected is a piece in select method 
@@ -79,11 +88,14 @@ class Game:
         return True
     
     def draw_valid_moves(self, moves):
+        """draw indicators for valid moves."""
+        # blue circles are indicators
         for move in moves:
             row, col = move
             pygame.draw.circle(self.window, BLUE, (col * SQUARE_SIZE + SQUARE_SIZE // 2, row * SQUARE_SIZE + SQUARE_SIZE // 2), 15)
 
     def change_turn(self):
+        """change player turn."""
         # prevents valid moves from staying after player's turn
         self.valid_moves = {}
         if self.turn == BLACK:
