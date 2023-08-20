@@ -13,6 +13,7 @@ class Board:
     
     # draw checkerboard
     def draw_board_squares(self, window):
+        """draw board squares."""
         window.fill(BLACK)
         for row in range(ROWS):
             # draws square every two squares and in each row. think of col as a square that is drawn
@@ -23,6 +24,7 @@ class Board:
     
     # initalizes it
     def create_board(self):
+        """creates checkerboard as a list."""
         for row in range(ROWS):
             # creates list in each row (contains empty and occupied spaces)
             self.board.append([])
@@ -43,6 +45,7 @@ class Board:
     
     # draws board AND pieces
     def draw_board_and_pieces(self, window):
+        """draws visual representation of checkerboard and pieces."""
         self.draw_board_squares(window)
         for row in range(ROWS):
             for col in range(COLS):
@@ -51,6 +54,7 @@ class Board:
                     piece.draw_piece(window)
     
     def remove(self, pieces):
+        """remove piece from checkerboard."""
         # pieces are technically still there but there is no visual representation
         # a 'removed' piece is set to 0 
         for piece in pieces:
@@ -62,6 +66,7 @@ class Board:
                     self.white_remaining -= 1
 
     def winner(self):
+        """returns winner."""
         if self.black_remaining <= 0:
             return WHITE
         elif self.white_remaining <= 0:
@@ -69,7 +74,8 @@ class Board:
 
         return None 
     def move(self, piece, row, col):
-        # easy way to swap positions in a list in python!!
+        """moves pieces in internal representation of checkerboard."""
+        # easy way to swap positions in a list in python
         self.board[piece.row][piece.col], self.board[row][col] = self.board[row][col], self.board[piece.row][piece.col]
         piece.move(row, col)
 
@@ -114,6 +120,7 @@ class Board:
     # step will be dependent on direction of movement (up or down if king)
     # skipped is a move when we have jumped and is stored; we can only move to squares when we skip another piece
     def _traverse_left(self, start, stop, step, color, left, skipped = []):
+        """contains algorithm to check and add valid moves selected piece can make on the left side."""
         moves = {}
         last = []
         # this for loop constantly checks to see if it can add to moves which will then be added to valid moves
@@ -131,6 +138,7 @@ class Board:
             if current_position == 0:
                 # adds this skipped to moves in moves.update
                 # if a piece can only skip once, add to moves
+
                 if skipped and not last:
                     break
                 elif skipped:
@@ -145,11 +153,14 @@ class Board:
                 # checks to see if we can double jump or not
                 # if not, last row is the last possible move
                 if last:
+                    # prevents a move outside the checkerboard being added to moves
                     if step == -1:
                         row = max(r - 3, 0)
                     else:
                         row = min(r + 3, ROWS)
-                    # r + step looks for the next row up, step 
+                    # checks to see if we can double or triple jump below
+                    # r + step looks for the next row up, step makes it diagonal, left - 1 shifts to the left and vice versa
+                    # skipped = last means when a piece has jumped over opponent's piece, this is the last move they can do 
                     moves.update(self._traverse_left(r + step, row, step, color, left - 1, skipped = last))
                     moves.update(self._traverse_right(r + step, row, step, color, left + 1, skipped = last))
                 break
@@ -167,6 +178,7 @@ class Board:
         return moves
 
     def _traverse_right(self, start, stop, step, color, right, skipped = []):
+        """contains algorithm to check and add valid moves selected piece can make on the right side."""
         moves = {}
         last = []
         # this for loop constantly checks to see if it can add to moves which will then be added to valid moves
