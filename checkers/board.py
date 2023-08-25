@@ -13,9 +13,10 @@ class Board:
     
     # draw checkerboard
     def draw_board_squares(self, window):
+        """draw checkerboard landscape."""
         window.fill(BLACK)
         for row in range(ROWS):
-            # draws square every two squares and in each row. think of col as a square that is drawn
+            # draws square every two squares and in each row using modulo. think of col as a square that is drawn
             for col in range(row % 2, ROWS, 2):
                 # draws rectangle in white
                 # rect argument specifies dimensions
@@ -23,6 +24,7 @@ class Board:
     
     # initalizes it
     def create_board(self):
+        """create internal representation of board."""
         for row in range(ROWS):
             # creates list in each row (contains empty and occupied spaces)
             self.board.append([])
@@ -43,6 +45,7 @@ class Board:
     
     # draws board AND pieces
     def draw_board_and_pieces(self, window):
+        """create internal representation of piece and visual rep."""
         self.draw_board_squares(window)
         for row in range(ROWS):
             for col in range(COLS):
@@ -51,6 +54,7 @@ class Board:
                     piece.draw_piece(window)
     
     def remove(self, pieces):
+        """remove piece."""
         # pieces are technically still there but there is no visual representation
         # a 'removed' piece is set to 0 
         for piece in pieces:
@@ -62,6 +66,7 @@ class Board:
                     self.white_remaining -= 1
 
     def winner(self):
+        """return winner."""
         if self.black_remaining <= 0:
             return WHITE
         elif self.white_remaining <= 0:
@@ -69,6 +74,7 @@ class Board:
 
         return None 
     def move(self, piece, row, col):
+        """move piece to selected position."""
         # easy way to swap positions in a list in python!!
         self.board[piece.row][piece.col], self.board[row][col] = self.board[row][col], self.board[piece.row][piece.col]
         piece.move(row, col)
@@ -85,6 +91,7 @@ class Board:
         return self.board[row][col]
     
     def get_valid_moves(self, piece):
+        """update moveset of selected piece."""
         # valid square: pieces we jump over eg. (4,5): [(3,4)]
         # stored in list in valid_moves dict
         # when piece moves to valid square, the jumped piece is removed in list
@@ -114,6 +121,7 @@ class Board:
     # step will be dependent on direction of movement (up or down if king)
     # skipped is a move when we have jumped and is stored; we can only move to squares when we skip another piece
     def _traverse_left(self, start, stop, step, color, left, skipped = []):
+        """check to see if moves on the left such as jumps can be done."""
         moves = {}
         last = []
         # this for loop constantly checks to see if it can add to moves which will then be added to valid moves
@@ -167,6 +175,7 @@ class Board:
         return moves
 
     def _traverse_right(self, start, stop, step, color, right, skipped = []):
+        """check to see if moves on the right such as jumps can be done."""
         moves = {}
         last = []
         # this for loop constantly checks to see if it can add to moves which will then be added to valid moves

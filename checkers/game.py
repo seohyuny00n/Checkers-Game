@@ -11,18 +11,20 @@ class Game:
         self.window = window
 
     def update_game_display(self, window) -> None:
+        """update game display."""
         self.board.draw_board_and_pieces(window)
         self.draw_valid_moves(self.valid_moves)
         pygame.display.update()
 
     def winner(self):
+        """return winner."""
         # borrows winner method from board
         return self.board.winner()
 
-    # cannot and should not be accessed from outside the class
     # rather than storing these properties twice, they're safely put in init and accessed
     # by the constructor method (class structure allows for class methods to be read all at once by computer)
     def _init(self):
+        """"""
         # selected by user
         self.selected = None
         # game controls the board. the board in main
@@ -35,10 +37,12 @@ class Game:
     # calls _init method
     # reset method is the same as _init method (initialized) but resets to the intialized state
     def reset(self):
+        """reset checkers game."""
         self._init()
     
     # select determines if a player will move a piece
     def select(self, row, col):
+        """select piece and get position."""
         # this will loop through until result is valid
         if self.selected:
             # trying to move result to whatever row, col is passed in
@@ -62,6 +66,7 @@ class Game:
     
     # private as players don't really move pieces, they *select* it
     def _move(self, row, col):
+        """move selected piece and change turn when done."""
         piece = self.board.get_piece(row, col)
         # a piece can only move into a space that has no piece. this is represented by 0
         # selected is a piece in select method 
