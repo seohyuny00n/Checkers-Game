@@ -3,8 +3,10 @@ from .constants import BLACK, ROWS, IVORY_WHITE, SQUARE_SIZE, COLS, WHITE
 from .piece import Piece
 
 class Board:
+    """ Control the board and piece behavior, including valid move sets."""
 
     def __init__(self) -> None:
+        """initialize board, pieces remaining, kings and board."""
         # internal representation of the board
         self.board = []
         self.white_remaining = self.black_remaining = 12
@@ -13,7 +15,7 @@ class Board:
     
     # draw checkerboard
     def draw_board_squares(self, window):
-        """draw checkerboard landscape."""
+        """draw checkerboard."""
         window.fill(BLACK)
         for row in range(ROWS):
             # draws square every two squares and in each row using modulo. think of col as a square that is drawn
@@ -24,7 +26,7 @@ class Board:
     
     # initalizes it
     def create_board(self):
-        """create internal representation of board."""
+        """create internal representation of piece."""
         for row in range(ROWS):
             # creates list in each row (contains empty and occupied spaces)
             self.board.append([])
@@ -45,7 +47,7 @@ class Board:
     
     # draws board AND pieces
     def draw_board_and_pieces(self, window):
-        """create internal representation of piece and visual rep."""
+        """draw visual representation of checkerboard and pieces."""
         self.draw_board_squares(window)
         for row in range(ROWS):
             for col in range(COLS):
@@ -74,7 +76,7 @@ class Board:
 
         return None 
     def move(self, piece, row, col):
-        """move piece to selected position."""
+        """move piece and change its position."""
         # easy way to swap positions in a list in python!!
         self.board[piece.row][piece.col], self.board[row][col] = self.board[row][col], self.board[piece.row][piece.col]
         piece.move(row, col)
@@ -88,10 +90,11 @@ class Board:
 
     # gets position of piece
     def get_piece(self, row, col):
+        """get piece position."""
         return self.board[row][col]
     
     def get_valid_moves(self, piece):
-        """update moveset of selected piece."""
+        """get valid moves and update moveset based on color or king status."""
         # valid square: pieces we jump over eg. (4,5): [(3,4)]
         # stored in list in valid_moves dict
         # when piece moves to valid square, the jumped piece is removed in list
@@ -119,9 +122,10 @@ class Board:
     
     # traverse left and right account for the multiple jumps
     # step will be dependent on direction of movement (up or down if king)
-    # skipped is a move when we have jumped and is stored; we can only move to squares when we skip another piece
+    # skipped contains jumped pieces; "we can only move to squares when we skip another piece"
+    # skipped is initalized to an empty list so that one piece's moves don't carry over into another's
     def _traverse_left(self, start, stop, step, color, left, skipped = []):
-        """check to see if moves on the left such as jumps can be done."""
+        """look for valid moves on the left side the selected piece can make."""
         moves = {}
         last = []
         # this for loop constantly checks to see if it can add to moves which will then be added to valid moves
@@ -137,8 +141,7 @@ class Board:
             # breaks out of for loop if a piece has been skipped
             # if == 0, piece has found empty square
             if current_position == 0:
-                # adds this skipped to moves in moves.update
-                # if a piece can only skip once, add to moves
+                # this is the case when skipped is last but are 2 different things at this point
                 if skipped and not last:
                     break
                 elif skipped:
@@ -157,13 +160,16 @@ class Board:
                         row = max(r - 3, 0)
                     else:
                         row = min(r + 3, ROWS)
-                    # r + step looks for the next row up, step 
+                    # checks to see if we can double or triple jump below
+                    # r + step looks for the next row up, step makes it diagonal, left - 1 shifts to the left and vice versa
+                    # skipped = last means when a piece has jumped over opponent's piece, this is the last move they can do
                     moves.update(self._traverse_left(r + step, row, step, color, left - 1, skipped = last))
+                    # sometimes a piece can double jump and this may involve them jumping to the left 
                     moves.update(self._traverse_right(r + step, row, step, color, left + 1, skipped = last))
                 break
 
             # if current position does not equal and the piece occupying it is the same color
-            # this will not be part of moves dict and will break out of for loop
+            # this will not be part of moves dict/break out of for loop
             elif current_position.color == color:
                 break
             # if not player's color, it is opponent's color
@@ -175,7 +181,7 @@ class Board:
         return moves
 
     def _traverse_right(self, start, stop, step, color, right, skipped = []):
-        """check to see if moves on the right such as jumps can be done."""
+        """look for valid moves on the right side the selected piece can make."""
         moves = {}
         last = []
         # this for loop constantly checks to see if it can add to moves which will then be added to valid moves
@@ -198,10 +204,12 @@ class Board:
                     moves[(r, right)] = last + skipped 
                 else:
                     # if above is not true
-                    # when there is no piece to skip over, this position in variable moves[(r, right)]
+                    # when there is no piece to skip over, this position in variable moves[(r, left)]
                     # will be stored as the last possible move a piece can make and be added to moves list
                     moves[(r, right)] = last
                 
+                # checks to see if we can double jump or not
+                # if not, last row is the last possible move
                 if last:
                     if step == -1:
                         row = max(r - 3, 0)
@@ -209,9 +217,12 @@ class Board:
                         row = min(r + 3, ROWS)
                     
                     moves.update(self._traverse_left(r + step, row, step, color, right - 1, skipped = last))
+                    # sometimes a piece can double jump and this may involve them jumping to the left
                     moves.update(self._traverse_right(r + step, row, step, color, right + 1, skipped = last))
                 break
 
+            # if current position does not equal and the piece occupying it is the same color
+            # this will not be part of moves dict/break out of for loop
             elif current_position.color == color:
                 break
             # if not player's color, it is opponent's color
