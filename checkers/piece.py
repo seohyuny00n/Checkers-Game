@@ -15,6 +15,7 @@ class Piece:
         self.color = color
         # king status of piece
         self.king = False
+        self.piggyback = False
         self.x = 0
         self.y = 0
         # call within bc calc position will be needed in case of moving twice
@@ -30,6 +31,10 @@ class Piece:
         """make piece a king."""
         self.king = True
 
+    def make_piggyback(self):
+        """make piece a piggyback."""
+        self.piggyback = True
+
     def draw_piece(self, window):
         """draw piece."""
         radius = SQUARE_SIZE//2 - self.PADDING
@@ -43,7 +48,8 @@ class Piece:
             # so, x - half the width of crown aligns crown centre with the middle, but not height
             # y - half the height of crown ensures it is wholly in centre  
             window.blit(CROWN, (self.x - CROWN.get_width()//2, self.y - CROWN.get_height()//2))
-    
+        if self.piggyback:
+
     def move(self, row, col):
         """move piece and change position once it moves."""
         # updates row and col
