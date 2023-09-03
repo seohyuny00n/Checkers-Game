@@ -20,3 +20,5 @@ BLUE = (0, 0, 255)
 GREY = (128, 128, 128)
 
 CROWN = pygame.transform.scale(pygame.image.load('checkers/crown.png'), (44, 25))
+
+PIG = pygame.transform.scale(pygame.image.load('checkers/pig.jpeg'), (25, 44))

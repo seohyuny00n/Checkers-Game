@@ -1,4 +1,4 @@
-from .constants import SQUARE_SIZE, GREY, CROWN
+from .constants import SQUARE_SIZE, GREY, CROWN, PIG
 import pygame
 
 class Piece:
@@ -9,7 +9,7 @@ class Piece:
 
     # each piece is unique and thus properties will be needed for each piece
     def __init__(self, row, col, color) -> None:
-        """Initalize piece color, king status and position."""
+        """Initalize piece color, king status, piggyback status and position."""
         self.row = row
         self.col = col
         self.color = color
@@ -49,6 +49,7 @@ class Piece:
             # y - half the height of crown ensures it is wholly in centre  
             window.blit(CROWN, (self.x - CROWN.get_width()//2, self.y - CROWN.get_height()//2))
         if self.piggyback:
+            window.blit(PIG, (self.x - PIG.get_width()//2, self.y - PIG.get_height()//2))
 
     def move(self, row, col):
         """move piece and change position once it moves."""
