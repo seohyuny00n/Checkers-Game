@@ -103,6 +103,7 @@ class Board:
         left = piece.col - 1
         right = piece.col + 1
         row = piece.row
+        piggyback_moves = {}
 
         # checks what way a piece can move based on color or king status
         # returns dict
@@ -117,6 +118,19 @@ class Board:
         if piece.color == WHITE or piece.king:
             valid_moves.update(self._traverse_left(row + 1, min(row + 3, ROWS), 1, piece.color, left))
             valid_moves.update(self._traverse_right(row + 1, min(row + 3, ROWS), 1, piece.color, right))
+        
+        # I think this is actually adding on top of the ordinary moveset even though piggyback is not in play
+        # the first section of this if statement applies to a regular moveset
+        # the combination of both code blocks creates a king moveset
+        if piece.color == BLACK and piece.piggyback: 
+            piggyback_moves.update(self._traverse_left(row - 1, max(row - 5, -1), -2, piece.color, left))   
+            piggyback_moves.update(self._traverse_right(row - 2, max(row - 5, -1), -2, piece.color, right)) 
+            valid_moves.update(piggyback_moves) 
+
+        if piece.color == WHITE and piece.piggyback: 
+            piggyback_moves.update(self._traverse_left(row + 2, min(row + 5, ROWS), 2, piece.color, left)) 
+            piggyback_moves.update(self._traverse_right(row + 2, min(row + 5, ROWS), 2, piece.color, right))
+            valid_moves.update(piggyback_moves) 
 
         return valid_moves
     
