@@ -37,22 +37,15 @@ def main():
         # this checks if any events have occurred
         # events are listed here
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type == pygame.quit:
                 run = False
-            
+
             if event.type == pygame.MOUSEBUTTONDOWN:
-                # get position the mouse clicks/buttondown
-                # this translates into row, col via get row col fn
-                # row, col is passed into piece (object of the board which confuses me)
-                # 
                 pos = pygame.mouse.get_pos()
                 row, col = get_row_col_from_mouse(pos)
-                # piece = board.get_piece(row, col) - test
-                # board.move(piece, 4, 3)
                 game.select(row, col)
         
         game.update_game_display(WIN)
     
-    pygame.quit()
-
+    quit()
 main()
