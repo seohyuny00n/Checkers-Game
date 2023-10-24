@@ -15,7 +15,7 @@ class Piece:
         self.color = color
         # king status of piece
         self.king = False
-        self.piggyback = False
+        self.piggyback = True
         self.x = 0
         self.y = 0
         # call within bc calc position will be needed in case of moving twice

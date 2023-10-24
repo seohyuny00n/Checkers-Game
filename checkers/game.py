@@ -44,6 +44,20 @@ class Game:
         """reset the game."""
         self._init()
     
+    def merge_pieces(self, row, col):
+        """merge piece in anticipation of piggyback."""
+        piece = self.board.get_piece(row, col)
+        recipient = self.board[row][col] +  self._move(row, col)
+        # TO-DO:
+        # - select piece
+        # move to new piece
+        # make them one
+        self.select()
+        if self.select.selected:
+            result = 
+
+
+
     # select determines if a player will move a piece
     def select(self, row, col):
         """select piece and move it to new position."""

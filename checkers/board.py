@@ -110,9 +110,9 @@ class Board:
         # max(row - 3, -1) looks for moves that can jump over a piece *or* just move left if there is no piece there
         # -1 in max() means the top row of the board; meaning pieces stop before that point
         # -1 passed as step variable increments for loop in traverse left method
-        if piece.color == BLACK or piece.king:
-            valid_moves.update(self._traverse_left(row - 1, max(row - 3, -1), -1, piece.color, left))
-            valid_moves.update(self._traverse_right(row - 1, max(row - 3, -1), -1, piece.color, right))
+        # if piece.color == BLACK or piece.king:
+        #     valid_moves.update(self._traverse_left(row - 1, max(row - 3, -1), -1, piece.color, left))
+        #     valid_moves.update(self._traverse_right(row - 1, max(row - 3, -1), -1, piece.color, right))
 
         # ROWS in min() means the last row at the bottom of the board; meaning pieces stop before that point
         if piece.color == WHITE or piece.king:
@@ -123,13 +123,13 @@ class Board:
         # the first section of this if statement applies to a regular moveset
         # the combination of both code blocks creates a king moveset
         if piece.color == BLACK and piece.piggyback: 
-            piggyback_moves.update(self._traverse_left(row - 1, max(row - 5, -1), -2, piece.color, left))   
-            piggyback_moves.update(self._traverse_right(row - 2, max(row - 5, -1), -2, piece.color, right)) 
+            piggyback_moves.update(self._traverse_left(row - 1, max(row - 3, -1), -3, piece.color, left))   
+            piggyback_moves.update(self._traverse_right(row - 1, max(row - 3, -1), -3, piece.color, right)) 
             valid_moves.update(piggyback_moves) 
 
         if piece.color == WHITE and piece.piggyback: 
-            piggyback_moves.update(self._traverse_left(row + 2, min(row + 5, ROWS), 2, piece.color, left)) 
-            piggyback_moves.update(self._traverse_right(row + 2, min(row + 5, ROWS), 2, piece.color, right))
+            piggyback_moves.update(self._traverse_left(row + 1, min(row + 3, ROWS), 3, piece.color, left)) 
+            piggyback_moves.update(self._traverse_right(row + 1, min(row + 3, ROWS), 3, piece.color, right))
             valid_moves.update(piggyback_moves) 
 
         return valid_moves
