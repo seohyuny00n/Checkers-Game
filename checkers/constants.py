@@ -1,22 +1,31 @@
 import pygame
 
-# width and height of the whole checkerboard
+# change the window size so that there will be black space 
+# extra black space will be where scores, turns, and home buttons will be
 WIDTH, HEIGHT = 800, 800
-# number of rows and cols in checkerboard
 ROWS, COLS = 8, 8
-# square size as per x-axis
-# in this case, 100 (=800/8)
 SQUARE_SIZE = WIDTH//COLS
 
-# colors of checker pieces
+# rgb color codes
+# will change
+RED = (255, 0, 0)
 WHITE = (255, 255, 255)
-# black will be used for checkerboard and checker pieces
 BLACK = (0, 0, 0)
-# ivory white for checkerboard
-IVORY_WHITE = (242, 239, 222)
-# color for showing user where they can move piece
 BLUE = (0, 0, 255)
-# border
-GREY = (128, 128, 128)
+GRAY = (128, 128, 128)
 
-CROWN = pygame.transform.scale(pygame.image.load('checkers/crown.png'), (44, 25))
+# the crown image, resized
+CROWN = pygame.transform.scale(pygame.image.load('crown.png'), (44, 25))
+# the crown image for when a piggyback piece becomes a king?
+KINGPIG = pygame.transform.scale(pygame.image.load('kingpig.png'), (50, 30))
+
+# for the game screen
+BLACKWOOD = pygame.transform.scale(pygame.image.load("blackwood.png"), (400, 800))
+# current image is placeholder, will replace with custom graphics
+MENU_BUTTON = pygame.transform.scale(pygame.image.load("homebuttonicon.png"), (44, 25))
+# info button for sidebar
+INFO_BUTTON = pygame.transform.scale(pygame.image.load("infobutton.png"), (44, 25))
+
+# turn indicator
+# WHITE = pygame.image.load()
+# RED = pygame.image.load()

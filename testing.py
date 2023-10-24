@@ -1,14 +1,28 @@
 import pygame, sys
 from sidebarbuttons import Button
+from checkers.constants import WIDTH, HEIGHT, SQUARE_SIZE, RED, WHITE, BLACKWOOD
+from checkers.board import Board
+from checkers.game import Game
 
 # testing separately for the menu
+# this should open up the game screen with the checkerboard when user clicks PLAY button
+# SPRINT 6: find out how to change the caption names
+
+FPS = 60
 
 # bg is from <a href="https://www.freepik.com/free-vector/watercolor-sugar-cotton-clouds-background_22378664.htm#query=pink%20wallpaper&position=1&from_view=search&track=ais">Image by pikisuperstar</a> on Freepik
 
 pygame.init()
 
 SCREEN = pygame.display.set_mode((1200, 800))
-pygame.display.set_caption("Main Menu")
+pygame.display.set_caption("Stackem Checkers")
+
+def get_row_col_from_mouse(pos):
+    # selecting and moving piece
+    x, y = pos
+    row = y // SQUARE_SIZE
+    col = x // SQUARE_SIZE
+    return row, col
 
 # perhaps make custom background if there is time
 PINK_MENU_BACKGROUND = pygame.transform.scale(pygame.image.load("6574814.jpg"), (1200, 800))
@@ -45,12 +59,41 @@ def open_info():
 
             pygame.display.update()
 
+
+MENU_SCREEN = 0
+GAME_SCREEN = 1
+
+# does not start up the game
+GAME_SESSION = MENU_SCREEN
+
 # GAME SCREEN HERE
+def start_game():
+    # should open the checkers game screen
+    # put the back button here?
+        clock = pygame.time.Clock()
+        game = Game(SCREEN)
+
+        while GAME_SESSION == GAME_SCREEN:
+            clock.tick(FPS)
+
+            if game.winner() is not None:
+                print(game.winner())
+            
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pos = pygame.mouse.get_pos()
+                    row, col = get_row_col_from_mouse(pos)
+                    game.select(row, col)
+            game.update()
 
 # MAIN MENU
 def main_menu():
     # the main menu stuff
-    while True:
+    while GAME_SESSION == MENU_SCREEN:
+        # on menu screen
         SCREEN.blit(PINK_MENU_BACKGROUND, (0, 0))
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
@@ -77,8 +120,15 @@ def main_menu():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if INFO_BUTTON.checkForInput(MENU_MOUSE_POS):
                     open_info()
+                elif GAME_BUTTON.checkForInput(MENU_MOUSE_POS):
+                    # switch to game screen
+                    GAME_SESSION = GAME_SCREEN
         
         pygame.display.update()
 
-main_menu()
-                
+# for the game
+while True:
+    if GAME_SESSION == MENU_SCREEN:
+        main_menu()
+    elif GAME_SESSION == GAME_SCREEN:
+        start_game()
