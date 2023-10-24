@@ -92,6 +92,7 @@ def start_game():
 # MAIN MENU
 def main_menu():
     # the main menu stuff
+    global GAME_SESSION
     while GAME_SESSION == MENU_SCREEN:
         # on menu screen
         SCREEN.blit(PINK_MENU_BACKGROUND, (0, 0))
