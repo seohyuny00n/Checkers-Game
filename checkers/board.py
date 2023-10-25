@@ -2,10 +2,6 @@ import pygame
 from checkers.constants import BLACK, ROWS, RED, SQUARE_SIZE, COLS, WHITE, WIDTH, HEIGHT
 from checkers.piece import Piece
 
-# change the overall board size 
-# add a section on the right hand side for:
-# score, turn, menu button, rules button
-
 class Board:
     def __init__(self):
         self.board = []

@@ -1,10 +1,11 @@
 import pygame, sys
-from sidebarbuttons import Button
+from button import Button
 from checkers.constants import WIDTH, HEIGHT, SQUARE_SIZE, RED, WHITE, BLACKWOOD
 from checkers.board import Board
 from checkers.game import Game
 
-# testing separately for the menu
+# testing separately for the side bar
+
 # this should open up the game screen with the checkerboard when user clicks PLAY button
 # SPRINT 6: find out how to change the caption names
 
@@ -60,10 +61,12 @@ def open_info():
             pygame.display.update()
 
 
+# state of the screen
 MENU_SCREEN = 0
 GAME_SCREEN = 1
 
 # does not start up the game
+# starting screen is the menu screen
 GAME_SESSION = MENU_SCREEN
 
 # GAME SCREEN HERE
@@ -86,7 +89,15 @@ def start_game():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
                     row, col = get_row_col_from_mouse(pos)
-                    game.select(row, col)
+                # if click is outside of checkerboard bounds
+                    if row < 0 or row >= 8 or col < 0 or col >= 8:
+                        # implement side bar buttons here
+                        return None
+                    else:
+                    # click is within the board boundaries 
+                        piece = game.board.get_piece(row, col)
+                        if piece is not None and piece.color == game.turn:
+                            game.select(row, col)
             game.update()
 
 # MAIN MENU
