@@ -1,7 +1,11 @@
 import pygame
 from checkers.constants import BLACK, ROWS, RED, SQUARE_SIZE, COLS, WHITE, WIDTH, HEIGHT
+from checkers.constants import LIGHT_PINK, MED_PINK, HOT_PINK, LIGHT_GREEN, GRASS_GREEN, BROWN
 from checkers.piece import Piece
+from button import Button
 
+# white = light pink
+# red = darker pink (hot pink)
 class Board:
     def __init__(self):
         self.board = []
@@ -13,10 +17,10 @@ class Board:
         # fill the window with black
         # change this so that there can be space for the scoreboard
         # or should the scoreboard be on top?
-        win.fill(BLACK)
+        win.fill(GRASS_GREEN)
         for row in range(ROWS):
             for col in range(row % 2, ROWS, 2):
-                pygame.draw.rect(win, RED, (row * SQUARE_SIZE, col * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
+                pygame.draw.rect(win, LIGHT_GREEN, (row * SQUARE_SIZE, col * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
 
     def move(self, piece, row, col):
         self.board[piece.row][piece.col], self.board[row][col] = self.board[row][col], self.board[piece.row][piece.col]
@@ -28,7 +32,7 @@ class Board:
         # make sure the kingpig is not reset when reaching the other side again
         if row == ROWS - 1 or row == 0:
             piece.make_king()
-            if piece.color == WHITE:
+            if piece.color == LIGHT_PINK:
                 self.white_kings += 1
             else:
                 self.red_kings += 1
@@ -42,9 +46,9 @@ class Board:
             for col in range(COLS):
                 if col % 2 == ((row + 1) % 2):
                     if row < 3:
-                        self.board[row].append(Piece(row, col, WHITE))
+                        self.board[row].append(Piece(row, col, LIGHT_PINK))
                     elif row > 4:
-                        self.board[row].append(Piece(row, col, RED))
+                        self.board[row].append(Piece(row, col, HOT_PINK))
                     else:
                         self.board[row].append(0)
                 else:
@@ -64,7 +68,7 @@ class Board:
         for piece in pieces:
             self.board[piece.row][piece.col] = 0
             if piece != 0:
-                if piece.color == RED:
+                if piece.color == HOT_PINK:
                     self.red_left -= 1
                 else:
                     self.white_left -=1
@@ -73,10 +77,10 @@ class Board:
         # shows the winner
         if self.red_left <= 0:
             # if no red pieces left (all captured)
-            return WHITE
+            return LIGHT_PINK
         elif self.white_left <= 0:
             # if no white pieces left
-            return RED
+            return HOT_PINK
         
         return None
 
@@ -87,11 +91,11 @@ class Board:
         right = piece.col + 1
         row = piece.row
 
-        if piece.color == RED or piece.king:
+        if piece.color == HOT_PINK or piece.king:
             moves.update(self._traverse_left(row - 1, max(row-3, -1), -1, piece.color, left))
             moves.update(self._traverse_right(row - 1, max(row-3, -1), -1, piece.color, right))
 
-        if piece.color == WHITE or piece.king:
+        if piece.color == LIGHT_PINK or piece.king:
             moves.update(self._traverse_left(row + 1, min(row + 3, ROWS), 1, piece.color, left))
             moves.update(self._traverse_right(row + 1, min(row +3, ROWS), 1, piece.color, right))
 

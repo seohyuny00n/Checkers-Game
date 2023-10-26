@@ -1,6 +1,7 @@
 # the gameplay
 import pygame
 from checkers.constants import RED, WHITE, BLUE, SQUARE_SIZE
+from checkers.constants import LIGHT_PINK, MED_PINK, HOT_PINK, LIGHT_GREEN, GRASS_GREEN
 from checkers.board import Board
 
 class Game:
@@ -16,7 +17,7 @@ class Game:
     def _init(self):
         self.selected = None
         self.board = Board()
-        self.turn = RED
+        self.turn = HOT_PINK
         # shows the current valid moves that the player can make
         self.valid_moves = {}
     
@@ -73,12 +74,12 @@ class Game:
         # visual indication of where players can validly move their pieces
         for move in moves:
             row, col = move
-            pygame.draw.circle(self.win, BLUE, (col * SQUARE_SIZE + SQUARE_SIZE//2, row * SQUARE_SIZE + SQUARE_SIZE//2), 15)
+            pygame.draw.circle(self.win, WHITE, (col * SQUARE_SIZE + SQUARE_SIZE//2, row * SQUARE_SIZE + SQUARE_SIZE//2), 15)
 
     def change_turn(self):
         # utilize this for player turn visualization
         self.valid_moves = {}
-        if self.turn == RED:
-            self.turn = WHITE
+        if self.turn == HOT_PINK:
+            self.turn = LIGHT_PINK
         else:
-            self.turn = RED
+            self.turn = HOT_PINK

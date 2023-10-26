@@ -84,7 +84,7 @@ def start_game():
 
             if game.winner() is not None:
                 print(game.winner())
-
+            
             # get current mouse pos outside of the checkerboard bounds
             GAME_MOUSE_POS = pygame.mouse.get_pos()
             
@@ -96,11 +96,6 @@ def start_game():
             GAME_HOME_BUTTON.changeColor(GAME_MOUSE_POS)
             GAME_HOME_BUTTON.update(SCREEN)
 
-            # replace with image
-            MENU_BUTTON_TEXT = get_font(45).render("HOME", True, "white")
-            MENU_BUTTON_RECT = MENU_BUTTON_TEXT.get_rect(center=(1000, 200))
-            SCREEN.blit(MENU_BUTTON_TEXT, MENU_BUTTON_RECT)
-
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -110,20 +105,11 @@ def start_game():
                     row, col = get_row_col_from_mouse(pos)
                 # if click is outside of checkerboard bounds
                     if row < 0 or row >= 8 or col < 0 or col >= 8:
-                        # implement side bar code here
-                        # includes: two buttons (home, info) and turn indicator
-                        if event.type == pygame.MOUSEBUTTONDOWN:
-                            # when clicked the home button
-                            if GAME_HOME_BUTTON.checkForInput(GAME_MOUSE_POS):
-                                # intializes the main screen
-                                main_menu()
-                                # make sure to make a separate rules screen that allows you to go back to the game.
-                                # or add onto the current code.
+                        if GAME_HOME_BUTTON.checkForInput(GAME_MOUSE_POS):
+                            main_menu()
                     else:
-                    # click is within the board boundaries 
-                        piece = game.board.get_piece(row, col)
-                        if piece is not None and piece.color == game.turn:
-                            game.select(row, col)
+                        # click is within the board boundaries
+                        game.select(row, col)
             game.update()
 
 # MAIN MENU

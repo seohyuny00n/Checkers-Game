@@ -41,7 +41,7 @@ class Piece:
                 win.blit(KINGPIG, (self.x - KINGPIG.get_width()//2, self.y - KINGPIG.get_height()//2))
             else:
             # blit = put image onto the screen
-                win.blit(CROWN, (self.x - CROWN.get_width()//2, self.y - CROWN.get_height()//2))
+                win.blit(KINGPIG, (self.x - KINGPIG.get_width()//2, self.y - KINGPIG.get_height()//2))
     
     def move(self, row, col):
         self.row = row
