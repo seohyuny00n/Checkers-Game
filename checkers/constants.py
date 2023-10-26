@@ -30,7 +30,6 @@ CROWN = pygame.transform.scale(pygame.image.load('crown.png'), (44, 25))
 KINGPIG = pygame.transform.scale(pygame.image.load('kingpig.png'), (50, 30))
 
 # for the game screen
-BLACKWOOD = pygame.transform.scale(pygame.image.load("blackwood.png"), (400, 800))
 # current image is placeholder, will replace with custom graphics
 MENU_BUTTON = pygame.transform.scale(pygame.image.load("homebuttonicon.png"), (44, 25))
 # info button for sidebar

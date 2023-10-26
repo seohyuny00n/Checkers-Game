@@ -59,6 +59,14 @@ def get_font(size):
     # change the font once everythings set
     return pygame.font.Font(None, size)
 
+# state of the screen
+MENU_SCREEN = 0
+GAME_SCREEN = 1
+
+# does not start up the game
+# starting screen is the menu screen
+GAME_SESSION = MENU_SCREEN
+
 # menu will include the info button, play button, and game name/icon
 # INFORMATION/RULES
 def open_info():
@@ -77,24 +85,26 @@ def open_info():
         INFO_BACK_MENU.changeColor(INFO_MOUSE_POS)
         INFO_BACK_MENU.update(SCREEN)
 
+        # return to game button
+        # perhaps only make this available if the game opened prev. !! 
+        INFO_BACK_GAME = Button(image=None, pos=(600, 800),
+                                text_input="BACK TO GAME", font=get_font(75), base_color="white", hovering_color="#FF939C")
+        INFO_BACK_GAME.changeColor(INFO_MOUSE_POS)
+        INFO_BACK_GAME.update(SCREEN)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if INFO_BACK_MENU.checkForInput(INFO_MOUSE_POS):
+                    GAME_SESSION == MENU_SCREEN
                     main_menu()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if INFO_BACK_GAME.checkForInput(INFO_MOUSE_POS):
+                    start_game()
 
             pygame.display.update()
-
-
-# state of the screen
-MENU_SCREEN = 0
-GAME_SCREEN = 1
-
-# does not start up the game
-# starting screen is the menu screen
-GAME_SESSION = MENU_SCREEN
 
 # GAME SCREEN HERE
 def start_game():
@@ -147,7 +157,13 @@ def start_game():
                     sys.exit()
                 # if home button is clicked, bring back to main menu
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    
+                    if GAME_HOME_BUTTON.checkForInput(GAME_MOUSE_POS):
+                        GAME_SESSION == MENU_SCREEN
+                        main_menu()
+                    elif RULES_BUTTON.checkForInput(GAME_MOUSE_POS):
+                        open_info()
+                    else:
+                        return None
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
                     row, col = get_row_col_from_mouse(pos)
