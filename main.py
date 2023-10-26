@@ -3,9 +3,9 @@ from button import Button
 from checkers.constants import WIDTH, HEIGHT, SQUARE_SIZE, RED, WHITE, BLACKWOOD
 from checkers.board import Board
 from checkers.game import Game
-from sidebarbuttons import ImageButton
 
-# testing separately for the menu
+# testing separately for the side bar
+
 # this should open up the game screen with the checkerboard when user clicks PLAY button
 # SPRINT 6: find out how to change the caption names
 
@@ -26,7 +26,10 @@ def get_row_col_from_mouse(pos):
     return row, col
 
 # perhaps make custom background if there is time
+# source:
 PINK_MENU_BACKGROUND = pygame.transform.scale(pygame.image.load("6574814.jpg"), (1200, 800))
+# source: 
+BLACKWOOD_BACKGROUND = pygame.transform.scale(pygame.image.load("blackwood.png"), (400, 800))
 
 def get_font(size):
     # change the font once everythings set
@@ -46,7 +49,7 @@ def open_info():
         SCREEN.blit(INFO_TEXT_ONE, INFO_RECT_ONE)
 
         INFO_BACK_MENU = Button(image=None, pos=(600, 600),
-                                text_input="BACK TO MENU", font=get_font(75), base_color="white",  hovering_color="pink")
+                                text_input="BACK TO MENU", font=get_font(75), base_color="white",  hovering_color="#FF939C")
         INFO_BACK_MENU.changeColor(INFO_MOUSE_POS)
         INFO_BACK_MENU.update(SCREEN)
 
@@ -79,20 +82,25 @@ def start_game():
         while GAME_SESSION == GAME_SCREEN:
             clock.tick(FPS)
 
-            # GAME_MOUSE_POS = pygame.mouse.get_pos()
-            # back button
-            # will take the user back to the menu screen
-            # GAME_BACK_MENU = Button(image="homebuttonicon.png", pos=(1000, 200), 
-                                    # text_input=None, font=None, base_color=None, hovering_color=None)
-            # GAME_BACK_MENU.update(SCREEN)
-            GAME_BACK_MENU_BUTTON = ImageButton("homebuttonicon.png", (1000, 200))
-            
-            for button in [GAME_BACK_MENU_BUTTON]:
-                button.update(SCREEN)
-
             if game.winner() is not None:
                 print(game.winner())
+
+            # get current mouse pos outside of the checkerboard bounds
+            GAME_MOUSE_POS = pygame.mouse.get_pos()
             
+            # back to main menu screen button
+            # more button gui code
+            GAME_HOME_BUTTON = Button(image=pygame.image.load("Play Rect.png"), pos=(1000, 200),
+                                      text_input="HOME", font=get_font(75), base_color="white", hovering_color="#FF939C")
+
+            GAME_HOME_BUTTON.changeColor(GAME_MOUSE_POS)
+            GAME_HOME_BUTTON.update(SCREEN)
+
+            # replace with image
+            MENU_BUTTON_TEXT = get_font(45).render("HOME", True, "white")
+            MENU_BUTTON_RECT = MENU_BUTTON_TEXT.get_rect(center=(1000, 200))
+            SCREEN.blit(MENU_BUTTON_TEXT, MENU_BUTTON_RECT)
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -100,7 +108,22 @@ def start_game():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
                     row, col = get_row_col_from_mouse(pos)
-                    game.select(row, col)
+                # if click is outside of checkerboard bounds
+                    if row < 0 or row >= 8 or col < 0 or col >= 8:
+                        # implement side bar code here
+                        # includes: two buttons (home, info) and turn indicator
+                        if event.type == pygame.MOUSEBUTTONDOWN:
+                            # when clicked the home button
+                            if GAME_HOME_BUTTON.checkForInput(GAME_MOUSE_POS):
+                                # intializes the main screen
+                                main_menu()
+                                # make sure to make a separate rules screen that allows you to go back to the game.
+                                # or add onto the current code.
+                    else:
+                    # click is within the board boundaries 
+                        piece = game.board.get_piece(row, col)
+                        if piece is not None and piece.color == game.turn:
+                            game.select(row, col)
             game.update()
 
 # MAIN MENU

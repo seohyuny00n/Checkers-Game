@@ -25,6 +25,17 @@ class Game:
    
     def reset(self):
         self._init()
+    
+# nicole
+    @property
+    def status_indicator(self):
+        return self.turn
+
+    @status_indicator.setter
+    def status_indicator(self, current_turn):
+        if current_turn:
+            self.turn = current_turn
+
 
     def select(self, row, col):
         if self.selected:
