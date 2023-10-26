@@ -11,8 +11,6 @@ from checkers.game import Game
 
 FPS = 60
 
-# bg is from <a href="https://www.freepik.com/free-vector/watercolor-sugar-cotton-clouds-background_22378664.htm#query=pink%20wallpaper&position=1&from_view=search&track=ais">Image by pikisuperstar</a> on Freepik
-
 pygame.init()
 
 SCREEN = pygame.display.set_mode((1200, 800))
@@ -50,14 +48,17 @@ def get_row_col_from_mouse(pos):
     return row, col
 
 # perhaps make custom background if there is time
-# source:
+# IMAGE SOURCE: bg is from <a href="https://www.freepik.com/free-vector/watercolor-sugar-cotton-clouds-background_22378664.htm#query=pink%20wallpaper&position=1&from_view=search&track=ais">Image by pikisuperstar</a> on Freepik
 PINK_MENU_BACKGROUND = pygame.transform.scale(pygame.image.load("6574814.jpg"), (1200, 800))
-# source: 
-BLACKWOOD_BACKGROUND = pygame.transform.scale(pygame.image.load("blackwood.png"), (400, 800))
 
+# font sources: 
 def get_font(size):
-    # change the font once everythings set
-    return pygame.font.Font(None, size)
+    # https://www.dafont.com/super-plants.font
+    return pygame.font.Font("Super Plants.ttf", size)
+
+def get_font_two(size):
+    # 
+    return pygame.font.Font("Evogria.otf", size)
 
 # state of the screen
 MENU_SCREEN = 0
@@ -163,10 +164,8 @@ def start_game():
                     elif RULES_BUTTON.checkForInput(GAME_MOUSE_POS):
                         open_info()
                     else:
-                        return None
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    pos = pygame.mouse.get_pos()
-                    row, col = get_row_col_from_mouse(pos)
+                        pos = pygame.mouse.get_pos()
+                        row, col = get_row_col_from_mouse(pos)
                 # if click is outside of checkerboard bounds
                     if row < 0 or row >= 8 or col < 0 or col >= 8:
                         # change
@@ -186,16 +185,19 @@ def main_menu():
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
 
-        MENU_TEXT = get_font(150).render("MAIN MENU", True, "white")
-        MENU_RECT = MENU_TEXT.get_rect(center=(640, 200))
+        STACKEM_TEXT = get_font(150).render("STACKEM", True, "white")
+        CHECKERS_TEXT = get_font(150).render("CHECKERS", True, "white")
+        STACKEM_RECT = STACKEM_TEXT.get_rect(center=(640, 200))
+        CHECKERS_RECT = CHECKERS_TEXT.get_rect(center=(640, 350))
 
         # change the options rect to make it so that the box is whitish not black
-        GAME_BUTTON = Button(image=pygame.image.load("Play Rect.png"), pos=(600, 450),
-                             text_input="PLAY", font=get_font(75), base_color="white", hovering_color="#FF939C")
-        INFO_BUTTON = Button(image=pygame.image.load("Play Rect.png"), pos=(600, 600),
-                             text_input="INFO", font=get_font(75), base_color="white", hovering_color="#FF939C")
+        GAME_BUTTON = Button(image=pygame.image.load("Play Rect.png"), pos=(600, 500),
+                             text_input="PLAY", font=get_font_two(75), base_color="white", hovering_color="#FF939C")
+        INFO_BUTTON = Button(image=pygame.image.load("Play Rect.png"), pos=(600, 630),
+                             text_input="INFO", font=get_font_two(75), base_color="white", hovering_color="#FF939C")
         
-        SCREEN.blit(MENU_TEXT, MENU_RECT)
+        SCREEN.blit(STACKEM_TEXT, STACKEM_RECT)
+        SCREEN.blit(CHECKERS_TEXT, CHECKERS_RECT)
 
         for button in [INFO_BUTTON, GAME_BUTTON]:
             button.changeColor(MENU_MOUSE_POS)
