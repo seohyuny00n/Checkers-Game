@@ -13,11 +13,11 @@ class Board:
         self.red_kings = self.white_kings = 0
         self.create_board()
 
+    # change variables to more simple names
     def draw_squares(self, win):
-        # fill the window with black
-        # change this so that there can be space for the scoreboard
-        # or should the scoreboard be on top?
-        win.fill(GRASS_GREEN)
+        # only extends to 800x800
+        # win.fill(GRASS_GREEN)
+        pygame.draw.rect(win, GRASS_GREEN, (0, 0, 800, 800))
         for row in range(ROWS):
             for col in range(row % 2, ROWS, 2):
                 pygame.draw.rect(win, LIGHT_GREEN, (row * SQUARE_SIZE, col * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
@@ -60,7 +60,7 @@ class Board:
             for col in range(COLS):
                 piece = self.board[row][col] 
                 if piece != 0:
-                    piece.draw(win)
+                   piece.draw(win)
     
     def remove(self, pieces):
         # removes the piece when captured

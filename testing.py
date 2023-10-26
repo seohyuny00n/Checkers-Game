@@ -1,6 +1,6 @@
 import pygame, sys
 from button import Button
-from checkers.constants import WIDTH, HEIGHT, SQUARE_SIZE, RED, WHITE, BLACKWOOD
+from checkers.constants import SQUARE_SIZE, BROWN, GRASS_GREEN
 from checkers.board import Board
 from checkers.game import Game
 
@@ -18,6 +18,25 @@ pygame.init()
 SCREEN = pygame.display.set_mode((1200, 800))
 pygame.display.set_caption("Stackem Checkers")
 
+# surface for side bar
+sidebar_surface = pygame.Surface((800+400, 800))
+
+def draw_sidebar():
+    # right of the checker gameboard
+    # contains widgets
+    sidebar_surface.fill(BROWN)
+
+    # get current mouse pos outside of the checkerboard bounds
+    GAME_MOUSE_POS = pygame.mouse.get_pos()
+
+    # buttons
+    # back to main menu screen button
+    GAME_HOME_BUTTON = Button(image=pygame.image.load("Play Rect.png"), pos=(800 + 300, 200),
+                              text_input="HOME", font=get_font(75), base_color="white", hovering_color="#FF939C")
+    GAME_HOME_BUTTON.changeColor(GAME_MOUSE_POS)
+    GAME_HOME_BUTTON.update(sidebar_surface)
+
+
 def get_row_col_from_mouse(pos):
     # selecting and moving piece
     x, y = pos
@@ -26,7 +45,10 @@ def get_row_col_from_mouse(pos):
     return row, col
 
 # perhaps make custom background if there is time
+# source:
 PINK_MENU_BACKGROUND = pygame.transform.scale(pygame.image.load("6574814.jpg"), (1200, 800))
+# source: 
+BLACKWOOD_BACKGROUND = pygame.transform.scale(pygame.image.load("blackwood.png"), (400, 800))
 
 def get_font(size):
     # change the font once everythings set
@@ -46,7 +68,7 @@ def open_info():
         SCREEN.blit(INFO_TEXT_ONE, INFO_RECT_ONE)
 
         INFO_BACK_MENU = Button(image=None, pos=(600, 600),
-                                text_input="BACK TO MENU", font=get_font(75), base_color="white",  hovering_color="pink")
+                                text_input="BACK TO MENU", font=get_font(75), base_color="white",  hovering_color="#FF939C")
         INFO_BACK_MENU.changeColor(INFO_MOUSE_POS)
         INFO_BACK_MENU.update(SCREEN)
 
@@ -69,6 +91,10 @@ GAME_SCREEN = 1
 # starting screen is the menu screen
 GAME_SESSION = MENU_SCREEN
 
+# button to go back home
+GAME_HOME_BUTTON = Button(image=pygame.image.load("Play Rect.png"), pos=(800 + 300, 200),
+                          text_input="HOME", font=get_font(75), base_color="white", hovering_color="#FF939C")
+
 # GAME SCREEN HERE
 def start_game():
     # should open the checkers game screen
@@ -81,7 +107,23 @@ def start_game():
 
             if game.winner() is not None:
                 print(game.winner())
-            
+
+            # get current mouse pos outside of the checkerboard bounds
+            GAME_MOUSE_POS = pygame.mouse.get_pos()
+
+            # buttons
+            # back to main menu screen button
+            GAME_HOME_BUTTON.changeColor(GAME_MOUSE_POS)
+
+            # clear part of the screen where side bar needs to go
+            # SCREEN.fill(GRASS_GREEN, (800, 0, 400, 800))
+
+            # draw the side bar
+            draw_sidebar()
+            SCREEN.blit(sidebar_surface, (800, 0))
+            # GAME_HOME_BUTTON.update(SCREEN)
+            pygame.display.update()
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -91,13 +133,11 @@ def start_game():
                     row, col = get_row_col_from_mouse(pos)
                 # if click is outside of checkerboard bounds
                     if row < 0 or row >= 8 or col < 0 or col >= 8:
-                        # implement side bar buttons here
+                        # change
                         return None
                     else:
-                    # click is within the board boundaries 
-                        piece = game.board.get_piece(row, col)
-                        if piece is not None and piece.color == game.turn:
-                            game.select(row, col)
+                        # click is within the board boundaries
+                        game.select(row, col)
             game.update()
 
 # MAIN MENU
@@ -110,7 +150,7 @@ def main_menu():
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
 
-        MENU_TEXT = get_font(150).render("MAIN MENU", True, "white")
+        MENU_TEXT = get_font(150).render("STACKEM CHECKERS", True, "white")
         MENU_RECT = MENU_TEXT.get_rect(center=(640, 200))
 
         # change the options rect to make it so that the box is whitish not black

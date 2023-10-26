@@ -1,6 +1,6 @@
 import pygame, sys
 from button import Button
-from checkers.constants import WIDTH, HEIGHT, SQUARE_SIZE, RED, WHITE, BLACKWOOD
+from checkers.constants import SQUARE_SIZE, BROWN, HEIGHT, HOT_PINK, LIGHT_PINK
 from checkers.board import Board
 from checkers.game import Game
 
@@ -17,6 +17,30 @@ pygame.init()
 
 SCREEN = pygame.display.set_mode((1200, 800))
 pygame.display.set_caption("Stackem Checkers")
+
+# surface for side bar
+# sidebar_surface = pygame.Surface((1200, 800))
+
+def draw_sidebar():
+    # draw on right of the checker gameboard
+    # contains widgets
+    sidebar_xpos = 800
+    sidebar_width = 400
+    sidebar = pygame.draw.rect(SCREEN, BROWN, (sidebar_xpos, 0, sidebar_width, HEIGHT))
+    # sidebar_surface.fill(BROWN)
+    # SCREEN.blit(sidebar_surface, (800, 0))
+
+    # get current mouse pos outside of the checkerboard bounds
+    GAME_MOUSE_POS = pygame.mouse.get_pos()
+
+    # DELETE
+    # buttons
+    # back to main menu screen button
+    GAME_HOME_BUTTON = Button(image=pygame.image.load("Play Rect.png"), pos=(800 + 300, 200),
+                              text_input="HOME", font=get_font(75), base_color="white", hovering_color="#FF939C")
+    GAME_HOME_BUTTON.changeColor(GAME_MOUSE_POS)
+    # GAME_HOME_BUTTON.update(sidebar)
+
 
 def get_row_col_from_mouse(pos):
     # selecting and moving piece
@@ -84,29 +108,53 @@ def start_game():
 
             if game.winner() is not None:
                 print(game.winner())
-            
+
             # get current mouse pos outside of the checkerboard bounds
             GAME_MOUSE_POS = pygame.mouse.get_pos()
-            
-            # back to main menu screen button
-            # more button gui code
-            GAME_HOME_BUTTON = Button(image=pygame.image.load("Play Rect.png"), pos=(1000, 200),
-                                      text_input="HOME", font=get_font(75), base_color="white", hovering_color="#FF939C")
 
+            # buttons
+            # back to main menu screen button
+            GAME_HOME_BUTTON = Button(image=pygame.image.load("Play Rect.png"), pos=(800 + 200, 200),
+                              text_input="HOME", font=get_font(75), base_color="white", hovering_color="#FF939C")
             GAME_HOME_BUTTON.changeColor(GAME_MOUSE_POS)
+
+            # show rules screen button
+            RULES_BUTTON = Button(image=pygame.image.load("Play Rect.png"), pos=(1000, 400),
+                                  text_input="RULES", font=get_font(75), base_color="white", hovering_color="#FF939C")
+            RULES_BUTTON.changeColor(GAME_MOUSE_POS)
+
+            # turn indicator placeholder (NICOLE)
+            # when player 1 has their turn, make it show that the TURN_STATUS_RED button shows 
+            # however, when p2 has their turn, make turn status white show instead
+            # PLAYER 1 (RED/HOT PINK) 
+            TURN_STATUS_RED = Button(image=pygame.image.load("Play Rect.png"), pos=(1000, 600),
+                                 text_input="PLAYER 1 TURN", font=get_font(50), base_color=HOT_PINK, hovering_color="#FF939C")
+            # PLAYER 2 (WHITE/LIGHT PINK)
+            TURN_STATUS_WHITE = Button(image=pygame.image.load("Play Rect.png"), pos=(1000, 600),
+                                       text_input="PLAYER 2 TURN", font=get_font(50), base_color="white", hovering_color="#FF939C")
+            # draw the side bar
+            draw_sidebar()
+            # upload the buttons
             GAME_HOME_BUTTON.update(SCREEN)
+            RULES_BUTTON.update(SCREEN)
+            TURN_STATUS_RED.update(SCREEN)
+
+            pygame.display.update()
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+                # if home button is clicked, bring back to main menu
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
                     row, col = get_row_col_from_mouse(pos)
                 # if click is outside of checkerboard bounds
                     if row < 0 or row >= 8 or col < 0 or col >= 8:
-                        if GAME_HOME_BUTTON.checkForInput(GAME_MOUSE_POS):
-                            main_menu()
+                        # change
+                        return None
                     else:
                         # click is within the board boundaries
                         game.select(row, col)
