@@ -57,8 +57,8 @@ def get_font(size):
     return pygame.font.Font("Super Plants.ttf", size)
 
 def get_font_two(size):
-    # 
-    return pygame.font.Font("Evogria.otf", size)
+    # https://www.dafont.com/evogria.font
+    return pygame.font.Font("Cocogoose Pro-trial.ttf", size)
 
 # state of the screen
 MENU_SCREEN = 0
@@ -71,6 +71,7 @@ GAME_SESSION = MENU_SCREEN
 # menu will include the info button, play button, and game name/icon
 # INFORMATION/RULES
 def open_info():
+    global GAME_SESSION
     # opens the information screen
     while True:
         INFO_MOUSE_POS = pygame.mouse.get_pos()
@@ -99,16 +100,20 @@ def open_info():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if INFO_BACK_MENU.checkForInput(INFO_MOUSE_POS):
-                    GAME_SESSION == MENU_SCREEN
+                    # to menu screen
+                    GAME_SESSION = MENU_SCREEN
                     main_menu()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if INFO_BACK_GAME.checkForInput(INFO_MOUSE_POS):
+                    # back to game screen instead of menu
+                    GAME_SESSION = GAME_SCREEN
                     start_game()
 
             pygame.display.update()
 
 # GAME SCREEN HERE
 def start_game():
+        global GAME_SESSION
     # should open the checkers game screen
     # put the back button here?
         clock = pygame.time.Clock()
@@ -153,13 +158,14 @@ def start_game():
             pygame.display.update()
 
             for event in pygame.event.get():
+                row, col = -1, -1
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
                 # if home button is clicked, bring back to main menu
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if GAME_HOME_BUTTON.checkForInput(GAME_MOUSE_POS):
-                        GAME_SESSION == MENU_SCREEN
+                        GAME_SESSION = MENU_SCREEN
                         main_menu()
                     elif RULES_BUTTON.checkForInput(GAME_MOUSE_POS):
                         open_info()
