@@ -3,6 +3,17 @@ import pygame
 from checkers.constants import RED, WHITE, BLUE, SQUARE_SIZE
 from checkers.constants import LIGHT_PINK, MED_PINK, HOT_PINK, LIGHT_GREEN, GRASS_GREEN
 from checkers.board import Board
+from assets.button import Button
+
+def get_font(size):
+    # https://www.dafont.com/super-plants.font
+    return pygame.font.Font("assets/Super Plants.ttf", size)
+
+pygame.init()
+
+# when player 1 has their turn, make it show that the TURN_STATUS_RED button shows 
+# however, when p2 has their turn, make turn status white show instead
+# PLAYER 1 (RED/HOT PINK) 
 
 class Game:
     def __init__(self, win):
@@ -26,17 +37,6 @@ class Game:
    
     def reset(self):
         self._init()
-    
-# nicole's code
-    @property
-    def status_indicator(self):
-        return self.turn
-
-    @status_indicator.setter
-    def status_indicator(self, current_turn):
-        if current_turn:
-            self.turn = current_turn
-
 
     def select(self, row, col):
         if self.selected:
@@ -83,3 +83,13 @@ class Game:
             self.turn = LIGHT_PINK
         else:
             self.turn = HOT_PINK
+    
+# nicole's code
+    @property
+    def status_indicator(self):
+        """Should return whose turn it is."""
+        if self.player_status == HOT_PINK:
+            return True
+    @status_indicator.setter
+    def status_indicator(self, player_status):
+        pass

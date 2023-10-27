@@ -4,7 +4,8 @@ from checkers.constants import SQUARE_SIZE, BROWN, HEIGHT, HOT_PINK, LIGHT_PINK
 from checkers.game import Game
 from assets.image import Image
 
-
+# source: https://github.com/omeradeel26/Checkers
+# source: https://www.bing.com/search?q=tech+with+tim+checkers&cvid=46fe6801d8804659bd5c29cfcf4a735a&gs_lcrp=EgZjaHJvbWUqBggAEEUYOzIGCAAQRRg7MgYIARBFGDkyBAgCEAAyBAgDEAAyBAgEEAAyBAgFEAAyBAgGEAAyBggHEEUYPDIGCAgQRRg80gEINDg4NGowajSoAgCwAgA&FORM=ANAB01&PC=SMTS
 FPS = 60
 
 pygame.init()
@@ -20,10 +21,6 @@ def draw_sidebar():
     sidebar_width = 400
     sidebar = pygame.draw.rect(SCREEN, BROWN, (sidebar_xpos, 0, sidebar_width, HEIGHT))
 
-    # get current mouse pos outside of the checkerboard bounds
-    GAME_MOUSE_POS = pygame.mouse.get_pos()
-
-
 def get_row_col_from_mouse(pos):
     # selecting and moving piece
     x, y = pos
@@ -31,11 +28,10 @@ def get_row_col_from_mouse(pos):
     col = x // SQUARE_SIZE
     return row, col
 
-# perhaps make custom background if there is time
 # IMAGE SOURCE: bg is from <a href="https://www.freepik.com/free-vector/watercolor-sugar-cotton-clouds-background_22378664.htm#query=pink%20wallpaper&position=1&from_view=search&track=ais">Image by pikisuperstar</a> on Freepik
 PINK_MENU_BACKGROUND = pygame.transform.scale(pygame.image.load("assets/6574814.jpg"), (1200, 800))
 
-# font sources: 
+# font sources: https://www.dafont.com/
 def get_font(size):
     # https://www.dafont.com/super-plants.font
     return pygame.font.Font("assets/Super Plants.ttf", size)
@@ -137,11 +133,20 @@ def open_info():
 
             pygame.display.update()
 
+
+# when player 1 has their turn, make it show that the TURN_STATUS_RED button shows 
+# however, when p2 has their turn, make turn status white show instead
+# PLAYER 1 (RED/HOT PINK) 
+TURN_STATUS_RED = Button(image=pygame.transform.scale(pygame.image.load("assets/pinkrect.png"), (380, 150)), pos=(1000, 600),
+                                 text_input="PLAYER 1 TURN", font=get_font(50), base_color=HOT_PINK, hovering_color="#FF939C")
+# PLAYER 2 (WHITE/LIGHT PINK)
+TURN_STATUS_WHITE = Button(image=pygame.transform.scale(pygame.image.load("assets/darkpinkrect.png"), (380,150)), pos=(1000, 600),
+                           text_input="PLAYER 2 TURN", font=get_font(50), base_color=LIGHT_PINK, hovering_color="#FF939C")
 # GAME SCREEN HERE
 def start_game():
         global GAME_SESSION
-    # should open the checkers game screen
-    # put the back button here?
+
+    # opens the checkers game screen
         clock = pygame.time.Clock()
         game = Game(SCREEN)
 
@@ -156,23 +161,14 @@ def start_game():
 
             # buttons
             # back to main menu screen button
-            GAME_HOME_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(800 + 200, 200),
-                              text_input="HOME", font=get_font(75), base_color="white", hovering_color="#ebc493")
+            GAME_HOME_BUTTON = Button(image=pygame.image.load("assets/pinkrect.png"), pos=(800 + 200, 200),
+                              text_input="HOME", font=get_font(75), base_color=HOT_PINK, hovering_color="#FF939C")
             GAME_HOME_BUTTON.changeColor(GAME_MOUSE_POS)
 
             # show rules screen button
-            RULES_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(1000, 400),
-                                  text_input="RULES", font=get_font(75), base_color="white", hovering_color="#bcacd2")
+            RULES_BUTTON = Button(image=pygame.image.load("assets/darkpinkrect.png"), pos=(1000, 400),
+                                  text_input="RULES", font=get_font(75), base_color=LIGHT_PINK, hovering_color="#FF939C")
             RULES_BUTTON.changeColor(GAME_MOUSE_POS)
-
-            # when player 1 has their turn, make it show that the TURN_STATUS_RED button shows 
-            # however, when p2 has their turn, make turn status white show instead
-            # PLAYER 1 (RED/HOT PINK) 
-            TURN_STATUS_RED = Button(image=pygame.transform.scale(pygame.image.load("assets/pinkrect.png"), (380, 150)), pos=(1000, 600),
-                                 text_input="PLAYER 1 TURN", font=get_font(50), base_color=HOT_PINK, hovering_color="#FF939C")
-            # PLAYER 2 (WHITE/LIGHT PINK)
-            TURN_STATUS_WHITE = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(1000, 600),
-                                       text_input="PLAYER 2 TURN", font=get_font(50), base_color="white", hovering_color="#FF939C")
             
             LIGHTPINK_FLOWER = Image(image=pygame.transform.scale(pygame.image.load("assets/lightpink_flower.png"), (50, 50)), pos=(1000, 100))
             ORANGE_FLOWER = Image(image=pygame.transform.scale(pygame.image.load("assets/orange_flower.png"), (50, 50)), pos=(850, 700))
@@ -180,7 +176,6 @@ def start_game():
             SALMON_FLOWER = Image(image=pygame.transform.scale(pygame.image.load("assets/salmon_flower.png"), (50, 50)), pos=(950, 490))
             PURPLE_FLOWER = Image(image=pygame.transform.scale(pygame.image.load("assets/purple_flower.png"), (50, 50)), pos=(1100, 300))
             PURP_TWO = Image(image=pygame.transform.scale(pygame.image.load("assets/purple_flower.png"), (60, 60)), pos=(1150, 720))
-            
 
             # draw the side bar
             draw_sidebar()
@@ -197,6 +192,14 @@ def start_game():
             PURP_TWO.update(SCREEN)
 
             pygame.display.update()
+            
+            # turn indicator widget
+            # during p1's turn, corresponding button will show up
+            # likewise, once p1's turn is done, switch to p2's turn, p2 button will show up instead
+            if game.turn == HOT_PINK:
+                TURN_STATUS_RED.update(SCREEN)
+            else:
+                TURN_STATUS_WHITE.update(SCREEN)
 
             for event in pygame.event.get():
                 row, col = -1, -1
@@ -216,12 +219,13 @@ def start_game():
                         row, col = get_row_col_from_mouse(pos)
                 # if click is outside of checkerboard bounds
                     if row < 0 or row >= 8 or col < 0 or col >= 8:
-                        # change
+                        # makes sure the game doesnt perceive it as an error and crash
                         return None
                     else:
                         # click is within the board boundaries
-                        game.select(row, col) 
+                        game.select(row, col)
 
+                        
             game.update()
 
 # MAIN MENU
