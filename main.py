@@ -143,11 +143,12 @@ def start_game():
             # when player 1 has their turn, make it show that the TURN_STATUS_RED button shows 
             # however, when p2 has their turn, make turn status white show instead
             # PLAYER 1 (RED/HOT PINK) 
-            TURN_STATUS_RED = Button(image=pygame.image.load("Play Rect.png"), pos=(1000, 600),
+            TURN_STATUS_RED = Button(image=pygame.transform.scale(pygame.image.load("pinkrect.png"), (380, 150)), pos=(1000, 600),
                                  text_input="PLAYER 1 TURN", font=get_font(50), base_color=HOT_PINK, hovering_color="#FF939C")
             # PLAYER 2 (WHITE/LIGHT PINK)
             TURN_STATUS_WHITE = Button(image=pygame.image.load("Play Rect.png"), pos=(1000, 600),
                                        text_input="PLAYER 2 TURN", font=get_font(50), base_color="white", hovering_color="#FF939C")
+
             # draw the side bar
             draw_sidebar()
             # upload the buttons
