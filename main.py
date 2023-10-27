@@ -4,10 +4,6 @@ from checkers.constants import SQUARE_SIZE, BROWN, HEIGHT, HOT_PINK, LIGHT_PINK
 from checkers.game import Game
 from assets.image import Image
 
-# testing separately for the side bar
-
-# this should open up the game screen with the checkerboard when user clicks PLAY button
-# SPRINT 6: find out how to change the caption names
 
 FPS = 60
 
@@ -27,14 +23,6 @@ def draw_sidebar():
     # get current mouse pos outside of the checkerboard bounds
     GAME_MOUSE_POS = pygame.mouse.get_pos()
 
-    # DELETE
-    # buttons
-    # back to main menu screen button
-    GAME_HOME_BUTTON = Button(image=pygame.image.load("graphics/Play Rect.png"), pos=(800 + 300, 200),
-                              text_input="HOME", font=get_font(75), base_color="white", hovering_color="#FF939C")
-    GAME_HOME_BUTTON.changeColor(GAME_MOUSE_POS)
-    # GAME_HOME_BUTTON.update(sidebar)
-
 
 def get_row_col_from_mouse(pos):
     # selecting and moving piece
@@ -45,16 +33,16 @@ def get_row_col_from_mouse(pos):
 
 # perhaps make custom background if there is time
 # IMAGE SOURCE: bg is from <a href="https://www.freepik.com/free-vector/watercolor-sugar-cotton-clouds-background_22378664.htm#query=pink%20wallpaper&position=1&from_view=search&track=ais">Image by pikisuperstar</a> on Freepik
-PINK_MENU_BACKGROUND = pygame.transform.scale(pygame.image.load("graphics/6574814.jpg"), (1200, 800))
+PINK_MENU_BACKGROUND = pygame.transform.scale(pygame.image.load("assets/6574814.jpg"), (1200, 800))
 
 # font sources: 
 def get_font(size):
     # https://www.dafont.com/super-plants.font
-    return pygame.font.Font("graphics/Super Plants.ttf", size)
+    return pygame.font.Font("assets/Super Plants.ttf", size)
 
 def get_font_two(size):
     # https://www.dafont.com/evogria.font
-    return pygame.font.Font("graphics/Cocogoose Pro-trial.ttf", size)
+    return pygame.font.Font("assets/Cocogoose Pro-trial.ttf", size)
 
 # state of the screen
 MENU_SCREEN = 0
@@ -79,9 +67,7 @@ def open_info():
                                 text_input="[RULES]", font=get_font(50), base_color="white",  hovering_color="#FF939C")
         RULES_TEXT.update(SCREEN)
 
-        # RULES_IMAGE = Image(image=pygame.transform.scale(pygame.image.load("graphics/rulespig.jpg"),(300, 150)), pos=(600, 100))
-        # RULES_IMAGE.update(SCREEN)
-
+        # rest of the rules
         RULES_ONE = Button(image=None, pos=(600, 200),
                                 text_input="I. Darker pink side's (bottom pieces) player will go first.", font=get_font_two(20), base_color="#ff8080",  hovering_color="#FF939C")
         RULES_ONE.update(SCREEN)
@@ -170,30 +156,30 @@ def start_game():
 
             # buttons
             # back to main menu screen button
-            GAME_HOME_BUTTON = Button(image=pygame.image.load("graphics/Play Rect.png"), pos=(800 + 200, 200),
+            GAME_HOME_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(800 + 200, 200),
                               text_input="HOME", font=get_font(75), base_color="white", hovering_color="#ebc493")
             GAME_HOME_BUTTON.changeColor(GAME_MOUSE_POS)
 
             # show rules screen button
-            RULES_BUTTON = Button(image=pygame.image.load("graphics/Play Rect.png"), pos=(1000, 400),
+            RULES_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(1000, 400),
                                   text_input="RULES", font=get_font(75), base_color="white", hovering_color="#bcacd2")
             RULES_BUTTON.changeColor(GAME_MOUSE_POS)
 
             # when player 1 has their turn, make it show that the TURN_STATUS_RED button shows 
             # however, when p2 has their turn, make turn status white show instead
             # PLAYER 1 (RED/HOT PINK) 
-            TURN_STATUS_RED = Button(image=pygame.transform.scale(pygame.image.load("graphics/pinkrect.png"), (380, 150)), pos=(1000, 600),
+            TURN_STATUS_RED = Button(image=pygame.transform.scale(pygame.image.load("assets/pinkrect.png"), (380, 150)), pos=(1000, 600),
                                  text_input="PLAYER 1 TURN", font=get_font(50), base_color=HOT_PINK, hovering_color="#FF939C")
             # PLAYER 2 (WHITE/LIGHT PINK)
-            TURN_STATUS_WHITE = Button(image=pygame.image.load("graphics/Play Rect.png"), pos=(1000, 600),
+            TURN_STATUS_WHITE = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(1000, 600),
                                        text_input="PLAYER 2 TURN", font=get_font(50), base_color="white", hovering_color="#FF939C")
             
-            LIGHTPINK_FLOWER = Image(image=pygame.transform.scale(pygame.image.load("graphics/lightpink_flower.png"), (50, 50)), pos=(1000, 100))
-            ORANGE_FLOWER = Image(image=pygame.transform.scale(pygame.image.load("graphics/orange_flower.png"), (50, 50)), pos=(850, 700))
-            ORANGE_BIGGER = Image(image=pygame.transform.scale(pygame.image.load("graphics/orange_flower.png"), (60, 60)), pos=(900, 300))
-            SALMON_FLOWER = Image(image=pygame.transform.scale(pygame.image.load("graphics/salmon_flower.png"), (50, 50)), pos=(950, 490))
-            PURPLE_FLOWER = Image(image=pygame.transform.scale(pygame.image.load("graphics/purple_flower.png"), (50, 50)), pos=(1100, 300))
-            PURP_TWO = Image(image=pygame.transform.scale(pygame.image.load("graphics/purple_flower.png"), (60, 60)), pos=(1150, 720))
+            LIGHTPINK_FLOWER = Image(image=pygame.transform.scale(pygame.image.load("assets/lightpink_flower.png"), (50, 50)), pos=(1000, 100))
+            ORANGE_FLOWER = Image(image=pygame.transform.scale(pygame.image.load("assets/orange_flower.png"), (50, 50)), pos=(850, 700))
+            ORANGE_BIGGER = Image(image=pygame.transform.scale(pygame.image.load("assets/orange_flower.png"), (60, 60)), pos=(900, 300))
+            SALMON_FLOWER = Image(image=pygame.transform.scale(pygame.image.load("assets/salmon_flower.png"), (50, 50)), pos=(950, 490))
+            PURPLE_FLOWER = Image(image=pygame.transform.scale(pygame.image.load("assets/purple_flower.png"), (50, 50)), pos=(1100, 300))
+            PURP_TWO = Image(image=pygame.transform.scale(pygame.image.load("assets/purple_flower.png"), (60, 60)), pos=(1150, 720))
             
 
             # draw the side bar
@@ -248,13 +234,13 @@ def main_menu():
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
 
-        LOGO = Image(pygame.transform.scale(pygame.image.load("graphics/logo.png"), (730, 550)), pos=(600, 250))
+        LOGO = Image(pygame.transform.scale(pygame.image.load("assets/logo.png"), (730, 550)), pos=(600, 250))
         LOGO.update(SCREEN)
 
         # change the options rect to make it so that the box is whitish not black
-        GAME_BUTTON = Button(image=pygame.image.load("graphics/Play Rect.png"), pos=(600, 540),
+        GAME_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(600, 540),
                              text_input="PLAY", font=get_font_two(75), base_color="black", hovering_color="white")
-        INFO_BUTTON = Button(image=pygame.image.load("graphics/Play Rect.png"), pos=(600, 670),
+        INFO_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(600, 670),
                              text_input="INFO", font=get_font_two(75), base_color="black", hovering_color="white")
 
         for button in [INFO_BUTTON, GAME_BUTTON]:
