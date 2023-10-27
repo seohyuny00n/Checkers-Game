@@ -10,7 +10,7 @@ def get_font(size):
     return pygame.font.Font("assets/Super Plants.ttf", size)
 
 pygame.init()
-
+# NICOLE
 class Game:
     def __init__(self, win):
         self._init()

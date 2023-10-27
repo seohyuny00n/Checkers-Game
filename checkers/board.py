@@ -3,6 +3,7 @@ from checkers.constants import BLACK, ROWS, RED, SQUARE_SIZE, COLS, WHITE, WIDTH
 from checkers.constants import LIGHT_PINK, MED_PINK, HOT_PINK, LIGHT_GREEN, GRASS_GREEN, BROWN
 from checkers.piece import Piece
 
+# NICOLE 
 # white = light pink
 # red = darker pink (hot pink)
 class Board:
