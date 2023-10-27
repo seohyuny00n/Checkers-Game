@@ -27,10 +27,4 @@ BROWN = (176, 120, 64)
 # the crown image, resized
 KINGPIG = pygame.transform.scale(pygame.image.load('checkers/kingpig.png'), (50, 30))
 
-# for the game screen
-# current image is placeholder, will replace with custom graphics
-MENU_BUTTON = pygame.transform.scale(pygame.image.load("homebuttonicon.png"), (44, 25))
-# info button for sidebar
-INFO_BUTTON = pygame.transform.scale(pygame.image.load("infobutton.png"), (44, 25))
-
 # turn indicaors

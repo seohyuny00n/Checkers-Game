@@ -1,4 +1,4 @@
-from checkers.constants import RED, WHITE, SQUARE_SIZE, GRAY, CROWN, KINGPIG
+from checkers.constants import RED, WHITE, SQUARE_SIZE, GRAY, KINGPIG
 import pygame
 
 class Piece:
