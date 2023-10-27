@@ -1,5 +1,6 @@
 import pygame
 
+# SEOHYUN
 class Image():
     "Image widgets that aside from looking pretty, does virtually nothing."
     def __init__(self, image, pos):

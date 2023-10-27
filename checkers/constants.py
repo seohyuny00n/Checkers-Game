@@ -1,5 +1,6 @@
 import pygame
 
+# NICOLE
 WIDTH, HEIGHT = 800, 800
 ROWS, COLS = 8, 8
 SQUARE_SIZE = WIDTH//COLS
@@ -13,6 +14,7 @@ BLACK = (0, 0, 0)
 BLUE = (0, 0, 255)
 GRAY = (128, 128, 128)
 
+# SEOHYUN 
 # moodboard colors
 LIGHT_PINK = (255, 204, 218)
 MED_PINK = (252, 119, 159)

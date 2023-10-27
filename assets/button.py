@@ -1,11 +1,7 @@
 import pygame
 import sys
 
-# pygame.init()
-
-# screen = pygame.display.set_mode((1200, 800))
-# pygame.display.set_caption("Information")
-
+# SEOHYUN
 # source: https://github.com/baraltech/Menu-System-PyGame/blob/main/button.py
 class Button():
     # the class for the button

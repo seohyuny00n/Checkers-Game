@@ -1,6 +1,7 @@
 from checkers.constants import RED, WHITE, SQUARE_SIZE, GRAY, KINGPIG
 import pygame
 
+# NICOLE
 class Piece:
     PADDING = 10
     OUTLINE = 2

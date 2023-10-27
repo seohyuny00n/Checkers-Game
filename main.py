@@ -13,7 +13,7 @@ pygame.init()
 SCREEN = pygame.display.set_mode((1200, 800))
 pygame.display.set_caption("Stackem Checkers")
 
-
+# SEOHYUN
 def draw_sidebar():
     # draw on right of the checker gameboard
     # contains widgets
