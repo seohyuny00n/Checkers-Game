@@ -12,10 +12,8 @@ class Board:
         self.red_kings = self.white_kings = 0
         self.create_board()
 
-    # change variables to more simple names
     def draw_squares(self, win):
         # only extends to 800x800
-        # win.fill(GRASS_GREEN)
         pygame.draw.rect(win, GRASS_GREEN, (0, 0, 800, 800))
         for row in range(ROWS):
             for col in range(row % 2, ROWS, 2):

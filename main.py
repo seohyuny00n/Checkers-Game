@@ -241,7 +241,6 @@ def main_menu():
         LOGO = Image(pygame.transform.scale(pygame.image.load("assets/logo.png"), (730, 550)), pos=(600, 250))
         LOGO.update(SCREEN)
 
-        # change the options rect to make it so that the box is whitish not black
         GAME_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(600, 540),
                              text_input="PLAY", font=get_font_two(75), base_color="black", hovering_color="white")
         INFO_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(600, 670),

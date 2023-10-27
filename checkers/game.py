@@ -11,10 +11,6 @@ def get_font(size):
 
 pygame.init()
 
-# when player 1 has their turn, make it show that the TURN_STATUS_RED button shows 
-# however, when p2 has their turn, make turn status white show instead
-# PLAYER 1 (RED/HOT PINK) 
-
 class Game:
     def __init__(self, win):
         self._init()
@@ -88,8 +84,8 @@ class Game:
     @property
     def status_indicator(self):
         """Should return whose turn it is."""
-        if self.player_status == HOT_PINK:
-            return True
+        return self.turn
     @status_indicator.setter
     def status_indicator(self, player_status):
-        pass
+        if player_status:
+            self.turn = player_status

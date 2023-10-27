@@ -1,11 +1,8 @@
 import pygame
 
-# change the window size so that there will be black space 
-# extra black space will be where scores, turns, and home buttons will be
 WIDTH, HEIGHT = 800, 800
 ROWS, COLS = 8, 8
 SQUARE_SIZE = WIDTH//COLS
-
 
 
 # rgb color codes
@@ -26,5 +23,3 @@ BROWN = (176, 120, 64)
 
 # the crown image, resized
 KINGPIG = pygame.transform.scale(pygame.image.load('checkers/kingpig.png'), (50, 30))
-
-# turn indicaors
