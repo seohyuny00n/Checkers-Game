@@ -25,9 +25,7 @@ GRASS_GREEN = (93, 151, 47)
 BROWN = (176, 120, 64)
 
 # the crown image, resized
-CROWN = pygame.transform.scale(pygame.image.load('crown.png'), (44, 25))
-# the crown image for when a piggyback piece becomes a king?
-KINGPIG = pygame.transform.scale(pygame.image.load('kingpig.png'), (50, 30))
+KINGPIG = pygame.transform.scale(pygame.image.load('checkers/kingpig.png'), (50, 30))
 
 # for the game screen
 # current image is placeholder, will replace with custom graphics

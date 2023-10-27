@@ -3,6 +3,7 @@ from button import Button
 from checkers.constants import SQUARE_SIZE, BROWN, HEIGHT, HOT_PINK, LIGHT_PINK
 from checkers.board import Board
 from checkers.game import Game
+from graphics.assets import Image
 
 # testing separately for the side bar
 
@@ -54,11 +55,11 @@ PINK_MENU_BACKGROUND = pygame.transform.scale(pygame.image.load("6574814.jpg"), 
 # font sources: 
 def get_font(size):
     # https://www.dafont.com/super-plants.font
-    return pygame.font.Font("Super Plants.ttf", size)
+    return pygame.font.Font("graphics/Super Plants.ttf", size)
 
 def get_font_two(size):
     # https://www.dafont.com/evogria.font
-    return pygame.font.Font("Cocogoose Pro-trial.ttf", size)
+    return pygame.font.Font("graphics/Cocogoose Pro-trial.ttf", size)
 
 # state of the screen
 MENU_SCREEN = 0
@@ -84,14 +85,14 @@ def open_info():
         SCREEN.blit(INFO_TEXT_ONE, INFO_RECT_ONE)
 
         INFO_BACK_MENU = Button(image=None, pos=(600, 600),
-                                text_input="BACK TO MENU", font=get_font(75), base_color="white",  hovering_color="#FF939C")
+                                text_input="BACK TO MENU", font=get_font(50), base_color="white",  hovering_color="#FF939C")
         INFO_BACK_MENU.changeColor(INFO_MOUSE_POS)
         INFO_BACK_MENU.update(SCREEN)
 
         # return to game button
         # perhaps only make this available if the game opened prev. !! 
-        INFO_BACK_GAME = Button(image=None, pos=(600, 800),
-                                text_input="BACK TO GAME", font=get_font(75), base_color="white", hovering_color="#FF939C")
+        INFO_BACK_GAME = Button(image=None, pos=(600, 700),
+                                text_input="BACK TO GAME", font=get_font(50), base_color="white", hovering_color="#FF939C")
         INFO_BACK_GAME.changeColor(INFO_MOUSE_POS)
         INFO_BACK_GAME.update(SCREEN)
 
@@ -132,12 +133,12 @@ def start_game():
             # buttons
             # back to main menu screen button
             GAME_HOME_BUTTON = Button(image=pygame.image.load("Play Rect.png"), pos=(800 + 200, 200),
-                              text_input="HOME", font=get_font(75), base_color="white", hovering_color="#FF939C")
+                              text_input="HOME", font=get_font(75), base_color="white", hovering_color="#ebc493")
             GAME_HOME_BUTTON.changeColor(GAME_MOUSE_POS)
 
             # show rules screen button
             RULES_BUTTON = Button(image=pygame.image.load("Play Rect.png"), pos=(1000, 400),
-                                  text_input="RULES", font=get_font(75), base_color="white", hovering_color="#FF939C")
+                                  text_input="RULES", font=get_font(75), base_color="white", hovering_color="#bcacd2")
             RULES_BUTTON.changeColor(GAME_MOUSE_POS)
 
             # turn indicator placeholder (NICOLE)
@@ -149,6 +150,16 @@ def start_game():
             # PLAYER 2 (WHITE/LIGHT PINK)
             TURN_STATUS_WHITE = Button(image=pygame.image.load("Play Rect.png"), pos=(1000, 600),
                                        text_input="PLAYER 2 TURN", font=get_font(50), base_color="white", hovering_color="#FF939C")
+            
+            # make a separate class for the flowers
+            # put all of the flowers into a folder called "assets"
+            LIGHTPINK_FLOWER = Image(image=pygame.transform.scale(pygame.image.load("graphics/lightpink_flower.png"), (50, 50)), pos=(1000, 100))
+            ORANGE_FLOWER = Image(image=pygame.transform.scale(pygame.image.load("graphics/orange_flower.png"), (50, 50)), pos=(850, 700))
+            ORANGE_BIGGER = Image(image=pygame.transform.scale(pygame.image.load("graphics/orange_flower.png"), (60, 60)), pos=(900, 300))
+            SALMON_FLOWER = Image(image=pygame.transform.scale(pygame.image.load("graphics/salmon_flower.png"), (50, 50)), pos=(950, 490))
+            PURPLE_FLOWER = Image(image=pygame.transform.scale(pygame.image.load("graphics/purple_flower.png"), (50, 50)), pos=(1100, 300))
+            PURP_TWO = Image(image=pygame.transform.scale(pygame.image.load("graphics/purple_flower.png"), (60, 60)), pos=(1150, 720))
+            
 
             # draw the side bar
             draw_sidebar()
@@ -156,6 +167,13 @@ def start_game():
             GAME_HOME_BUTTON.update(SCREEN)
             RULES_BUTTON.update(SCREEN)
             TURN_STATUS_RED.update(SCREEN)
+            # add the flowers to the screen
+            LIGHTPINK_FLOWER.update(SCREEN)
+            ORANGE_FLOWER.update(SCREEN)
+            PURPLE_FLOWER.update(SCREEN)
+            SALMON_FLOWER.update(SCREEN)
+            ORANGE_BIGGER.update(SCREEN)
+            PURP_TWO.update(SCREEN)
 
             pygame.display.update()
 
@@ -194,19 +212,22 @@ def main_menu():
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
 
-        STACKEM_TEXT = get_font(150).render("STACKEM", True, "white")
-        CHECKERS_TEXT = get_font(150).render("CHECKERS", True, "white")
-        STACKEM_RECT = STACKEM_TEXT.get_rect(center=(640, 200))
-        CHECKERS_RECT = CHECKERS_TEXT.get_rect(center=(640, 350))
+        LOGO = Image(pygame.transform.scale(pygame.image.load("graphics/logo.png"), (730, 550)), pos=(600, 250))
+        LOGO.update(SCREEN)
+
+        # STACKEM_TEXT = get_font(150).render("STACKEM", True, "white")
+        # CHECKERS_TEXT = get_font(150).render("CHECKERS", True, "white")
+        # STACKEM_RECT = STACKEM_TEXT.get_rect(center=(640, 200))
+        # CHECKERS_RECT = CHECKERS_TEXT.get_rect(center=(640, 350))
 
         # change the options rect to make it so that the box is whitish not black
-        GAME_BUTTON = Button(image=pygame.image.load("Play Rect.png"), pos=(600, 500),
-                             text_input="PLAY", font=get_font_two(75), base_color="white", hovering_color="#FF939C")
-        INFO_BUTTON = Button(image=pygame.image.load("Play Rect.png"), pos=(600, 630),
-                             text_input="INFO", font=get_font_two(75), base_color="white", hovering_color="#FF939C")
+        GAME_BUTTON = Button(image=pygame.image.load("Play Rect.png"), pos=(600, 540),
+                             text_input="PLAY", font=get_font_two(75), base_color="black", hovering_color="white")
+        INFO_BUTTON = Button(image=pygame.image.load("Play Rect.png"), pos=(600, 670),
+                             text_input="INFO", font=get_font_two(75), base_color="black", hovering_color="white")
         
-        SCREEN.blit(STACKEM_TEXT, STACKEM_RECT)
-        SCREEN.blit(CHECKERS_TEXT, CHECKERS_RECT)
+        # SCREEN.blit(STACKEM_TEXT, STACKEM_RECT)
+        # SCREEN.blit(CHECKERS_TEXT, CHECKERS_RECT)
 
         for button in [INFO_BUTTON, GAME_BUTTON]:
             button.changeColor(MENU_MOUSE_POS)
