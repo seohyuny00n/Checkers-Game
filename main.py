@@ -63,6 +63,7 @@ def get_font_two(size):
 # state of the screen
 MENU_SCREEN = 0
 GAME_SCREEN = 1
+RULES_SCREEN = 2
 
 # does not start up the game
 # starting screen is the menu screen
@@ -73,7 +74,7 @@ GAME_SESSION = MENU_SCREEN
 def open_info():
     global GAME_SESSION
     # opens the information screen
-    while True:
+    while GAME_SESSION == RULES_SCREEN:
         INFO_MOUSE_POS = pygame.mouse.get_pos()
 
         SCREEN.fill("black")
@@ -169,6 +170,7 @@ def start_game():
                         GAME_SESSION = MENU_SCREEN
                         main_menu()
                     elif RULES_BUTTON.checkForInput(GAME_MOUSE_POS):
+                        GAME_SESSION = RULES_SCREEN
                         open_info()
                     else:
                         pos = pygame.mouse.get_pos()
@@ -216,16 +218,20 @@ def main_menu():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if INFO_BUTTON.checkForInput(MENU_MOUSE_POS):
+                    GAME_SESSION = RULES_SCREEN
                     open_info()
                 elif GAME_BUTTON.checkForInput(MENU_MOUSE_POS):
                     # switch to game screen
                     GAME_SESSION = GAME_SCREEN
+                    start_game()
         
         pygame.display.update()
 
-# for the game
+# state of the screen
 while True:
     if GAME_SESSION == MENU_SCREEN:
         main_menu()
     elif GAME_SESSION == GAME_SCREEN:
         start_game()
+    elif GAME_SESSION == RULES_SCREEN:
+        open_info()

@@ -2,7 +2,6 @@ import pygame
 from checkers.constants import BLACK, ROWS, RED, SQUARE_SIZE, COLS, WHITE, WIDTH, HEIGHT
 from checkers.constants import LIGHT_PINK, MED_PINK, HOT_PINK, LIGHT_GREEN, GRASS_GREEN, BROWN
 from checkers.piece import Piece
-from button import Button
 
 # white = light pink
 # red = darker pink (hot pink)

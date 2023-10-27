@@ -27,7 +27,7 @@ class Game:
     def reset(self):
         self._init()
     
-# nicole
+# nicole's code
     @property
     def status_indicator(self):
         return self.turn
